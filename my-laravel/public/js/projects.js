@@ -9,6 +9,7 @@ const App = {
 			name: '',
 			idProject: 0,
 			idTask: 0,
+			taskSwitcher: false,
 			info: []
 		}
 	},
@@ -16,14 +17,24 @@ const App = {
 		async openProject(id) {
 		const res = await fetch(`/api/projects/${id}`)
 		this.tasks = await res.json()
-		await this.clearList(id)
+		this.clearList(id)
+		this.taskSwitcher = false
 	},
 	clearList(id) {
 		this.idProject = id
 	},
 	openTask(id) {
-		this.idTask = id
-	}
+		this.myFilter(id)
+		this.idTask = id		
+	},
+	myFilter(id) {
+		if(this.idTask != id){
+      this.taskSwitcher = true;
+		}
+		if(this.idTask == id){
+      this.taskSwitcher = false;
+		}
+    }
 	},
 	async mounted() {
 		const res = await fetch('/api/projects')
@@ -32,4 +43,4 @@ const App = {
 	 
 }
 
-Vue.createApp(App).mount("#app")
+const myApp = Vue.createApp(App).mount("#app")
