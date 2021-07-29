@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 	//return env('APP_NAME');
     return view('welcome');
+})->name('home');
+Route::get('login', function () {
+    return view('welcome');
 });
+
+Route::get('/projects', [FrontController::class, 'index']);

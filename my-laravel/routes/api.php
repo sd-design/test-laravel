@@ -18,8 +18,7 @@ use App\Http\Controllers\ApiController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('/', [ApiController::class, 'index']);
 Route::get('projects', [ApiController::class, 'projects']);
 Route::get('projects/{id}', [ApiController::class, 'show_project']);
-Route::get('tasks/{category}', [ApiController::class, 'tasks']);
-Route::get('tasks/{category}/{id}', [ApiController::class, 'show_task']);
+Route::get('tasks/{id}', [ApiController::class, 'show_task']);

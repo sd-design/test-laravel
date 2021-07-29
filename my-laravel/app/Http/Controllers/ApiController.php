@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-	public function projects()
+	public function index()
 	{
 			return response()->json([
     'Api' => 'My Laravel',
@@ -14,28 +15,22 @@ class ApiController extends Controller
 	]);
 	}
 
+	public function projects()
+	{
+		$projects = DB::select('select * from projects');
+			return response()->json($projects);
+	}
+
 	public function show_project($id)
 	{
-			return response()->json([
-				'title' => 'Project #'.$id,
-				'project id' => $id
-				]);
+		$tasksProject = DB::select('select * from tasks where project_id = ?', [$id]);
+		return response()->json($tasksProject);
 	}
 
-	public function tasks($category)
+	public function show_task($id)
 	{
-			return response()->json([
-				'Tasks' => 'Index',
-				'category of projects' => $category
-				]);
-	}
-
-	public function show_task($category, $id)
-	{
-			return response()->json([
-				'Project category' => $category,
-				'task id' => $id
-				]);
+		$task = DB::select('select * from tasks where ID = ?', [$id]);
+		return response()->json([$task]);
 	}
 
 }
